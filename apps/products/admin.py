@@ -4,10 +4,10 @@ from django.utils.html import format_html
 
 from .models import Product, ProductImage
 
-class ProductImageInline(admin, TabularInline):
+class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
-    readonly_fields = ('preview')
+    readonly_fields = ('preview',)
 
     def preview(self, obj):
         if obj.image:

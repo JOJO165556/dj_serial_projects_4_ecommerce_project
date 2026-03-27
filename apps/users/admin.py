@@ -12,6 +12,7 @@ class UserAdmin(BaseUserAdmin):
         ("Role", {"fields": ("role",)}),
     )
     
-    list_display = ["username", "email", "role", "is_active", "is_staff"]
+    list_display = ["email", "role", "is_active", "is_staff"]
+    ordering = ['email']
     list_filter = ["role", "is_active", "is_staff"]
-    search_fields = ["username", "email"]
+    search_fields = ["email"]

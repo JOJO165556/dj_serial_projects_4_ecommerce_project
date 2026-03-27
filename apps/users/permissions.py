@@ -4,14 +4,14 @@ class IsAdmin(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user.role =="admin"
     
-class IsManager(BaseException):
+class IsManager(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user.role =="manager"
     
-class IsSeller(BaseException):
+class IsSeller(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user.role =="seller"
     
-class IsCustomer(BaseException):
+class IsCustomer(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user.role =="customer"
