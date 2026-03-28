@@ -7,7 +7,7 @@ def custom_exception_handler(exc, context):
         response.data = {
             "success": False,
             "error": {
-                "message": response.data.get("detail", "An error occurred"),
+                "message": response.data,
                 "status_code": response.status_code
             }
         }

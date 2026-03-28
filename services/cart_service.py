@@ -5,14 +5,19 @@ from core.exceptions.business_exceptions import (
     OutOfStockException,
     ProductInactiveException
 )
+from core.exceptions.http_exceptions import NotFoundException
 
 #Ajouter au panier
 def add_to_cart(user, product_id, quantity=1):
     if quantity <= 0:
         raise InvalidQuantityException()
 
-    cart,_ = Cart.objects.get_or_create(user=user)
-    product = Product.objects.get(id=product_id)
+    cart, _ = Cart.objects.get_or_create(user=user)
+
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        raise NotFoundException("Produit introuvable")
 
     if not product.is_available:
         raise ProductInactiveException()

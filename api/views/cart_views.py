@@ -2,27 +2,30 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from apps.users.permissions import IsCustomer
 from services.cart_service import add_to_cart, remove_from_cart, clear_cart
 
 from apps.cart.models import Cart
 from api.serializers.cart_serializers import CartSerializer
 
-#Voir panier
+
+# Voir panier
 class CartView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsCustomer]
 
     def get(self, request):
-        cart,_ = Cart.objects.get_or_create(user=request.user)
+        cart, _ = Cart.objects.get_or_create(user=request.user)
         serializer = CartSerializer(cart)
         return Response(serializer.data)
 
-#Ajouter produit
+
+# Ajouter produit
 class AddToCartView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsCustomer]
 
     def post(self, request):
         product_id = request.data.get('product_id')
-        quantity = request.data.get('quantity', 1)
+        quantity = int(request.data.get('quantity', 1))
         item = add_to_cart(request.user, product_id, quantity)
 
         return Response({
@@ -30,9 +33,10 @@ class AddToCartView(APIView):
             "item_id": item.id
         }, status=status.HTTP_201_CREATED)
 
-#Supprimer produit
+
+# Supprimer produit
 class RemoveFromCartView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsCustomer]
 
     def post(self, request):
         product_id = request.data.get('product_id')
@@ -40,9 +44,10 @@ class RemoveFromCartView(APIView):
 
         return Response({"message": "Produit supprimé"})
 
-#Vider panier
+
+# Vider panier
 class ClearCartView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsCustomer]
 
     def post(self, request):
         clear_cart(request.user)
