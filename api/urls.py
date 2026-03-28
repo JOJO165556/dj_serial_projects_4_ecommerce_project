@@ -19,6 +19,8 @@ from api.views.order_views import (
     OrderDetailView
 )
 
+from api.views.payment_views import PaymentView
+
 urlpatterns = [
     path('', include(router.urls)),
     path('auth/register/', RegisterView.as_view()),
@@ -38,4 +40,8 @@ urlpatterns += [
     path('orders/create/', CreateOrderView.as_view()),
     path('orders/', UserOrderView.as_view()),
     path('orders/<int:pk>/', OrderDetailView.as_view()),
+]
+
+urlpatterns += [
+    path('payments/', PaymentView.as_view()),
 ]
