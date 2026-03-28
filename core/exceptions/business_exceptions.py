@@ -23,6 +23,11 @@ class ProductInactiveException(BaseAPIException):
     error_code = 'product_inactive'
 
 #Order - Payment
+class MissingAddressException(BaseAPIException):
+    status_code = 400
+    default_detail = 'Shipping address is required'
+    error_code = 'missing_address'
+
 class AlreadyPaidException(BaseAPIException):
     status_code = 400
     default_detail = 'Order already paid'

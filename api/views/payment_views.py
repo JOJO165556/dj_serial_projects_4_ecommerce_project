@@ -1,31 +1,27 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from apps.orders.models import Order
-from apps.users.permissions import IsCustomer
-from core.exceptions.http_exceptions import NotFoundException, PermissionDeniedException
-from services.payment_service import process_payment
-from api.serializers.payment_serializers import PaymentSerializer
+from core.exceptions.business_exceptions import AlreadyPaidException
+from core.exceptions.http_exceptions import NotFoundException
+from services.payment.flutterwave import create_flutterwave_payment
 
 
-class PaymentView(APIView):
-    permission_classes = [IsAuthenticated, IsCustomer]
+class InitPaymentView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        order_id = request.data.get('order_id')
+        order_id = request.data.get("order_id")
 
-        #Vérifier que la commande existe
         try:
-            order = Order.objects.get(id=order_id)
+            order = Order.objects.get(id=order_id, user=request.user)
         except Order.DoesNotExist:
-            raise NotFoundException("Commande introuvable")
+            raise NotFoundException("Order not found")
 
-        #Vérifier que la commande appartient à l'utilisateur connecté
-        if order.user != request.user:
-            raise PermissionDeniedException()
+        if order.status == "paid":
+            raise AlreadyPaidException()
 
-        payment = process_payment(order_id)
-        serializer = PaymentSerializer(payment)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response = create_flutterwave_payment(order, request.user)
+
+        return Response(response)

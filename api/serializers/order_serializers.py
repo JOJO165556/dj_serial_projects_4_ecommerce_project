@@ -23,6 +23,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'id',
             'status',
             'total_price',
+            'shipping_address',
             'created_at',
             'items'
         ]

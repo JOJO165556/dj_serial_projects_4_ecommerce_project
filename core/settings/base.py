@@ -9,10 +9,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
-
-ALLOWED_HOSTS = []
-
+FLW_PUBLIC_KEY = os.getenv('FLW_PUBLIC_KEY')
+FLW_SECRET_KEY = os.getenv('FLW_SECRET_KEY')
+FLW_WEBHOOK_SECRET = os.getenv('FLW_WEBHOOK_SECRET')
+FLW_REDIRECT_URL = "http://localhost:8000/payment/success/"
 
 # Application definition
 
@@ -79,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.category_processor',
             ],
         },
     },
@@ -132,5 +133,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

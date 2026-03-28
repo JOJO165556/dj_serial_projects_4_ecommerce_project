@@ -9,6 +9,6 @@ class ProductFilter(django_filters.FilterSet):
         model = Product
         fields = {
             'category': ['exact'],
-            'is_active': ['exact'],
+            'is_available': ['exact'],
             'stock': ['gte'],
         }

@@ -19,7 +19,7 @@ from api.views.order_views import (
     OrderDetailView
 )
 
-from api.views.payment_views import PaymentView
+from api.views.payment_views import InitPaymentView
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -43,5 +43,5 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('payments/', PaymentView.as_view()),
+    path('payments/', InitPaymentView.as_view()),
 ]

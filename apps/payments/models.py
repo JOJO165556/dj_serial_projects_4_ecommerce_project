@@ -31,6 +31,8 @@ class Payment(models.Model):
         null=True
     )
 
+    flutterwave_tx_id = models.CharField(max_length=255, blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

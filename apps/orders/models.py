@@ -30,7 +30,7 @@ class Order(models.Model):
         decimal_places=2,
         default=0,
     )
-
+    shipping_address = models.TextField(blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

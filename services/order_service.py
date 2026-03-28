@@ -1,16 +1,23 @@
 from apps.cart.models import Cart
 from apps.orders.models import Order, OrderItem
-from core.exceptions.business_exceptions import EmptyCartException
+from core.exceptions.business_exceptions import EmptyCartException, MissingAddressException
 
 #Créer commande depuis panier
-def create_order(user):
+def create_order(user, shipping_address):
+    if not shipping_address or not shipping_address.strip():
+        raise MissingAddressException()
+        
     cart, _ = Cart.objects.get_or_create(user=user)
     items = cart.items.select_related('product').all()
 
     if not items:
         raise EmptyCartException()
 
-    order = Order.objects.create(user=user)
+    order = Order.objects.create(
+        user=user,
+        shipping_address=shipping_address,
+    )
+
     total = 0
 
     for item in items:

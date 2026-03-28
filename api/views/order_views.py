@@ -15,7 +15,8 @@ class CreateOrderView(APIView):
     permission_classes = [IsAuthenticated, IsCustomer]
 
     def post(self, request):
-        order = create_order(request.user)
+        address = request.data.get('shipping_address')
+        order = create_order(request.user, address)
 
         if not order:
             return Response(

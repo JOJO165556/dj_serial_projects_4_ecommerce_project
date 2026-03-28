@@ -17,6 +17,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "Categories"
+        unique_together = ('parent', 'name')
 
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return self.name
