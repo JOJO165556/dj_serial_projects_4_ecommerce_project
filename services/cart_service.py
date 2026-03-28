@@ -1,10 +1,25 @@
 from apps.cart.models import Cart, CartItem
 from apps.products.models import Product
+from core.exceptions.business_exceptions import (
+    InvalidQuantityException,
+    OutOfStockException,
+    ProductInactiveException
+)
 
 #Ajouter au panier
 def add_to_cart(user, product_id, quantity=1):
+    if quantity <= 0:
+        raise InvalidQuantityException()
+
     cart,_ = Cart.objects.get_or_create(user=user)
     product = Product.objects.get(id=product_id)
+
+    if not product.is_available:
+        raise ProductInactiveException()
+
+    if product.stock < quantity:
+        raise OutOfStockException()
+
     item, created = CartItem.objects.get_or_create(
         cart=cart,
         product=product
@@ -24,7 +39,7 @@ def remove_from_cart(user, product_id):
 
     CartItem.objects.filter(
         cart=cart,
-        product=product_id
+        product_id=product_id
     ).delete()
 
 #Vider panier

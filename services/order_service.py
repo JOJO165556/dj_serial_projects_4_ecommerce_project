@@ -1,5 +1,6 @@
 from apps.cart.models import Cart
 from apps.orders.models import Order, OrderItem
+from core.exceptions.business_exceptions import EmptyCartException
 
 #Créer commande depuis panier
 def create_order(user):
@@ -7,7 +8,7 @@ def create_order(user):
     items = cart.items.all()
 
     if not items:
-        return None
+        raise EmptyCartException()
 
     order = Order.objects.create(user=user)
     total = 0

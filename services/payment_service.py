@@ -1,10 +1,14 @@
 import uuid
 from apps.payments.models import Payment
 from apps.orders.models import Order
+from core.exceptions.business_exceptions import AlreadyPaidException
 
 #Simuler paiement
 def process_payment(order_id):
     order = Order.objects.get(id=order_id)
+
+    if order.status == 'paid':
+        raise AlreadyPaidException()
 
     payment,_ = Payment.objects.get_or_create(
         order=order,
