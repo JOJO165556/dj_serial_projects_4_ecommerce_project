@@ -14,7 +14,7 @@ class CartView(APIView):
     permission_classes = [IsAuthenticated, IsCustomer]
 
     def get(self, request):
-        cart, _ = Cart.objects.get_or_create(user=request.user)
+        cart, _ = Cart.objects.prefetch_related('items__product').get_or_create(user=request.user)
         serializer = CartSerializer(cart)
         return Response(serializer.data)
 

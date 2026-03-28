@@ -32,7 +32,12 @@ class UserOrderView(APIView):
     permission_classes = [IsAuthenticated, IsCustomer]
 
     def get(self, request):
-        orders = Order.objects.filter(user=request.user).order_by('-created_at')
+        orders = (
+            Order.objects
+            .filter(user=request.user)
+            .prefetch_related('items__product')
+            .order_by('-created_at')
+        )
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
 
@@ -43,7 +48,11 @@ class OrderDetailView(APIView):
 
     def get(self, request, pk):
         try:
-            order = Order.objects.get(id=pk, user=request.user)
+            order = (
+                Order.objects
+                .prefetch_related('items__product')
+                .get(id=pk, user=request.user)
+            )
         except Order.DoesNotExist:
             raise NotFoundException("Order not found")
         serializer = OrderSerializer(order)

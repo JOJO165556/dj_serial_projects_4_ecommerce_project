@@ -4,8 +4,8 @@ from core.exceptions.business_exceptions import EmptyCartException
 
 #Créer commande depuis panier
 def create_order(user):
-    cart = Cart.objects.create(user=user)
-    items = cart.items.all()
+    cart, _ = Cart.objects.get_or_create(user=user)
+    items = cart.items.select_related('product').all()
 
     if not items:
         raise EmptyCartException()
@@ -27,5 +27,8 @@ def create_order(user):
     order.save()
 
     cart.items.all().delete()
+
+    # Prefetch pour éviter N+1 à la sérialisation
+    order = Order.objects.prefetch_related('items__product').get(id=order.id)
 
     return order
