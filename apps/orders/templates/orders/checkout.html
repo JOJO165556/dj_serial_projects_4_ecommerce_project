@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout | PrimeShop{% endblock %}
+
+{% block content %}
+<div class="glass-panel" style="max-width: 800px; margin: 0 auto; padding: 3rem;">
+    <h1 style="font-size: 2.2rem; margin-bottom: 2rem;">Finaliser la commande</h1>
+
+    <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+        
+        <!-- Résumé rapide de la sélection -->
+        <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Résumé</h3>
+            
+            {% for item in items %}
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem;">
+                <span>{{ item.quantity }}x {{ item.product.name }}</span>
+                <span>{% widthratio item.product.price 1 item.quantity %}€</span>
+            </div>
+            {% endfor %}
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 1rem; padding-top: 1rem; display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem;">
+                <span>Total</span>
+                <span>{{ total }}€</span>
+            </div>
+        </div>
+
+        <!-- Formulaire de Livraison -->
+        <div>
+            <h3 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Adresse de Livraison</h3>
+            
+            <form method="POST" action="{% url 'orders:checkout' %}">
+                {% csrf_token %}
+                
+                <div style="margin-bottom: 2rem;">
+                    <label for="{{ form.shipping_address.id_for_label }}" style="display: block; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 0.5rem;">{{ form.shipping_address.label }}</label>
+                    <div class="custom-textarea-wrapper">
+                        {{ form.shipping_address }}
+                    </div>
+                    {% if form.shipping_address.errors %}
+                        <p style="color: #ef4444; font-size: 0.8rem; margin-top: 0.3rem;">{{ form.shipping_address.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <a href="{% url 'cart:detail' %}" class="btn btn-outline" style="flex: 1; padding: 1rem; text-align: center;">Retour à la sélection</a>
+                    <button type="submit" class="btn btn-primary" style="flex: 2; padding: 1rem; font-size: 1.1rem; border-radius: 8px;">
+                        Finaliser la commande ({{ total }}€)
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>
+
+<style>
+/* Style spécifique au textarea pour intégrer le design existant */
+.custom-textarea-wrapper textarea {
+    width: 100%;
+    background: rgba(0,0,0,0.2) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 8px !important;
+    color: white !important;
+    padding: 1rem !important;
+    font-size: 1rem !important;
+    outline: none !important;
+    transition: border-color 0.3s !important;
+    font-family: 'Inter', sans-serif !important;
+    resize: vertical;
+}
+.custom-textarea-wrapper textarea:focus {
+    border-color: var(--accent-color) !important;
+}
+</style>
+{% endblock %}

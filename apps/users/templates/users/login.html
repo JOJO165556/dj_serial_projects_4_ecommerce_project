@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Connexion | PrimeShop{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+    <div class="glass-panel" style="width: 100%; max-width: 420px; padding: 3rem; animation: fadeIn 0.5s ease-out;">
+        
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Bon retour</h1>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Entrez vos identifiants pour accéder à votre compte.</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; text-align: center;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" action="{% url 'users:login' %}">
+            {% csrf_token %}
+            
+            <div style="margin-bottom: 1.5rem;">
+                <label for="{{ form.username.id_for_label }}" style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500;">Email</label>
+                <input type="email" name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}" required autofocus
+                       style="width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: white; padding: 0.8rem 1rem; font-size: 1rem; outline: none; transition: border-color 0.3s;"
+                       onfocus="this.style.borderColor='var(--accent-color)'" onblur="this.style.borderColor='var(--glass-border)'">
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <label for="{{ form.password.id_for_label }}" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Mot de passe</label>
+                    <a href="#" style="font-size: 0.8rem; color: var(--accent-color);">Oublié ?</a>
+                </div>
+                <input type="password" name="{{ form.password.html_name }}" id="{{ form.password.id_for_label }}" required
+                       style="width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: white; padding: 0.8rem 1rem; font-size: 1rem; outline: none; transition: border-color 0.3s;"
+                       onfocus="this.style.borderColor='var(--accent-color)'" onblur="this.style.borderColor='var(--glass-border)'">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px;">
+                Se connecter
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--text-secondary);">
+            Pas encore de compte ? 
+            <a href="{% url 'users:register' %}" style="color: var(--accent-color); font-weight: 600;">S'inscrire</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

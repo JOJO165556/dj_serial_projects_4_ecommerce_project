@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} | PrimeShop{% endblock %}
+
+{% block content %}
+<div class="glass-panel" style="padding: 3rem; margin-top: 2rem; display: flex; flex-direction: column; gap: 3rem;">
+    <!-- Retour -->
+    <a href="{% url 'products:home' %}" style="display: inline-flex; align-items: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: -1rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Retour à la sélection
+    </a>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 4rem; align-items: flex-start;">
+        <!-- Image Placeholder (Gauche) -->
+        <div style="flex: 1; min-width: 300px; height: 500px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+            <span style="position: absolute; top: 1rem; left: 1rem; background: var(--bg-primary); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; border: 1px solid var(--glass-border);">Sélectionné avec soin</span>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="color: var(--text-secondary);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        
+        <!-- Informations (Droite) -->
+        <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+            <div style="margin-bottom: 2rem;">
+                <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); font-weight: 600;">
+                    {% if product.category %}{{ product.category.name }}{% else %}Sélection PrimeShop{% endif %}
+                </span>
+                <h1 style="font-size: 3rem; line-height: 1.1; margin: 0.5rem 0 1rem 0; font-weight: 600;">{{ product.name }}</h1>
+                
+                <!-- Sous-titre minimaliste -->
+                <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2rem; font-family: 'Inter', sans-serif;">
+                    Un produit utile, pensé pour durer et simplifier votre quotidien.
+                </p>
+
+                <p style="font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem;">{{ product.price }}€</p>
+                
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    {% if product.stock > 0 %}
+                    <span style="color: #4ade80;">● En stock</span>
+                    {% else %}
+                    <span style="color: #ef4444;">● Indisponible</span>
+                    {% endif %}
+                </p>
+            </div>
+            
+            <div style="margin-bottom: 2.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+                <p style="color: var(--text-primary); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                    Ce produit a été sélectionné pour sa qualité, sa fiabilité et son design.
+                </p>
+                <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.8;">
+                    Il s'intègre parfaitement dans une utilisation quotidienne tout en offrant une expérience simple et efficace.
+                </p>
+            </div>
+
+            <!-- Points forts -->
+            <ul style="list-style: none; padding: 0; margin-bottom: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <li style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.95rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Matériaux de qualité
+                </li>
+                <li style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.95rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Conception durable
+                </li>
+                <li style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.95rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Utilisation simple
+                </li>
+                <li style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.95rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Design épuré
+                </li>
+            </ul>
+            
+            <form method="POST" action="{% url 'cart:add' %}" style="display: flex; flex-direction: column; gap: 1rem;">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                
+                {% if product.stock > 0 %}
+                <div style="display: flex; gap: 1rem;">
+                    <div style="display: flex; border: 1px solid var(--glass-border); border-radius: 8px; overflow: hidden; height: 55px;">
+                        <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" style="width: 80px; background: rgba(0,0,0,0.2); border: none; color: white; text-align: center; font-size: 1.1rem; font-family: 'Inter', sans-serif; outline: none;">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="flex: 1; height: 55px; font-size: 1.1rem; border-radius: 8px; font-weight: 500;">
+                        Ajouter au panier
+                    </button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem; justify-content: flex-end;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    Expédition suivie & paiement sécurisé
+                </div>
+                {% else %}
+                <button type="button" class="btn btn-outline" style="width: 100%; height: 55px; font-size: 1.1rem; border-radius: 8px; opacity: 0.5; cursor: not-allowed;" disabled>
+                    Épuisé actuellement
+                </button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
