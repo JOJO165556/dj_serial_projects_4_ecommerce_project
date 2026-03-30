@@ -13,7 +13,8 @@ def register_web(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, f"Bienvenue {user.email}! Votre compte a été créé avec succès.")
+            name = user.email.split('@')[0].capitalize()
+            messages.success(request, f"Bienvenue {name} ! Votre compte a été créé avec succès.")
             return redirect('products:home')
     else:
         form = CustomUserCreationForm()
@@ -30,7 +31,8 @@ def login_web(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, "Connexion réussie.")
+            name = user.email.split('@')[0].capitalize()
+            messages.success(request, f"Heureux de vous revoir, {name} !")
             return redirect('products:home')
         else:
             messages.error(request, "Email ou mot de passe incorrect.")

@@ -1,29 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Votre sélection | PrimeShop{% endblock %}
+{% block title %}Votre panier | PrimeShop{% endblock %}
 
 {% block content %}
 <div style="max-width: 1000px; margin: 0 auto;">
-    <h1 style="font-size: 2.5rem; margin-bottom: 2rem;">Votre sélection</h1>
+    <h1 style="font-size: 2.5rem; margin-bottom: 2rem;">Votre panier</h1>
 
     {% if items %}
         <div class="glass-panel" style="padding: 2rem;">
             <!-- En-tête -->
-            <div style="display: grid; grid-template-columns: 3fr 1fr 1fr 1fr; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; margin-bottom: 1.5rem; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500;">
+            <div style="display: grid; grid-template-columns: 3fr 1fr 1fr 1fr 60px; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; margin-bottom: 1.5rem; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500;">
                 <div>PRODUIT</div>
-                <div style="text-align: center;">PRIX UNITAIRE</div>
-                <div style="text-align: center;">QUANTITÉ</div>
-                <div style="text-align: right;">ACTION</div>
+                <div style="text-align: center;">PRIX UNIT.</div>
+                <div style="text-align: center;">QTÉ</div>
+                <div style="text-align: center;">TOTAL</div>
+                <div></div>
             </div>
 
             <!-- Liste des produits -->
             {% for item in items %}
-            <div style="display: grid; grid-template-columns: 3fr 1fr 1fr 1fr; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div style="display: grid; grid-template-columns: 3fr 1fr 1fr 1fr 60px; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
                 <!-- Infos Produit -->
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--text-secondary);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <div style="width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.05); flex-shrink: 0;">
+                        {% with img=item.product.images.first %}
+                        {% if img %}
+                            <img src="{{ img.image.url }}" alt="{{ item.product.name }}" style="width:100%;height:100%;object-fit:cover;">
+                        {% else %}
+                            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--text-secondary);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            </div>
+                        {% endif %}
+                        {% endwith %}
                     </div>
                     <div>
                         <h3 style="font-size: 1.1rem; margin-bottom: 0.3rem;"><a href="{% url 'products:detail' item.product.id %}">{{ item.product.name }}</a></h3>
@@ -32,12 +41,15 @@
                 </div>
                 
                 <!-- Prix Unit -->
-                <div style="text-align: center; font-size: 1.1rem; font-weight: 600;">{{ item.product.price }}€</div>
+                <div style="text-align: center; font-size: 1rem; font-weight: 600;">{{ item.product.price }} F CFA</div>
                 
                 <!-- Quantité -->
-                <div style="text-align: center; font-size: 1.1rem;">{{ item.quantity }}</div>
+                <div style="text-align: center; font-size: 1rem;">{{ item.quantity }}</div>
+
+                <!-- Total Ligne -->
+                <div style="text-align: center; font-size: 1rem; font-weight: 700; color: var(--accent-color);">{% widthratio item.product.price 1 item.quantity %} F CFA</div>
                 
-                <!-- Action -->
+                <!-- Supprimer -->
                 <div style="text-align: right;">
                     <form method="POST" action="{% url 'cart:remove' item.product.id %}">
                         {% csrf_token %}
@@ -58,12 +70,12 @@
                 
                 <div style="text-align: right; min-width: 300px;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1.1rem;">
-                        <span style="color: var(--text-secondary);">Sous-total:</span>
-                        <span style="font-weight: 600;">{{ total }}€</span>
+                        <span style="color: var(--text-secondary);">Sous-total</span>
+                        <span style="font-weight: 600;">{{ total }} F CFA</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-size: 1.4rem;">
-                        <span>Total (TTC):</span>
-                        <span style="font-weight: 800; color: #fff;">{{ total }}€</span>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; font-size: 1.35rem;">
+                        <span>Total (TTC)</span>
+                        <span style="font-weight: 800; color: #fff;">{{ total }} F CFA</span>
                     </div>
                     
                     <a href="{% url 'orders:checkout' %}" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 8px;">
@@ -76,7 +88,7 @@
         <!-- État vide -->
         <div class="glass-panel" style="text-align: center; padding: 5rem 2rem;">
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--text-secondary); margin-bottom: 1.5rem;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <h2 style="margin-bottom: 1rem;">Votre sélection est actuellement vide</h2>
+            <h2 style="margin-bottom: 1rem;">Votre panier est actuellement vide</h2>
             <p style="color: var(--text-secondary); margin-bottom: 2.5rem;">Découvrez notre catalogue pour trouver ce qui manque à votre quotidien.</p>
             <a href="{% url 'products:home' %}" class="btn btn-primary" style="padding: 0.8rem 2rem;">
                 Parcourir la boutique

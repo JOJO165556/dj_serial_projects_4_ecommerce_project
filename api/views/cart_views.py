@@ -11,7 +11,7 @@ from api.serializers.cart_serializers import CartSerializer
 
 # Voir panier
 class CartView(APIView):
-    permission_classes = [IsAuthenticated, IsCustomer]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         cart, _ = Cart.objects.prefetch_related('items__product').get_or_create(user=request.user)
@@ -21,7 +21,7 @@ class CartView(APIView):
 
 # Ajouter produit
 class AddToCartView(APIView):
-    permission_classes = [IsAuthenticated, IsCustomer]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         product_id = request.data.get('product_id')
@@ -36,7 +36,7 @@ class AddToCartView(APIView):
 
 # Supprimer produit
 class RemoveFromCartView(APIView):
-    permission_classes = [IsAuthenticated, IsCustomer]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         product_id = request.data.get('product_id')
@@ -47,7 +47,7 @@ class RemoveFromCartView(APIView):
 
 # Vider panier
 class ClearCartView(APIView):
-    permission_classes = [IsAuthenticated, IsCustomer]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         clear_cart(request.user)

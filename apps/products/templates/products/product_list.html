@@ -4,141 +4,247 @@
 {% block title %}PrimeShop | Accueil{% endblock %}
 
 {% block content %}
-<!-- Hero -->
-<section class="hero-section" style="padding: 6rem 0 4rem 0;">
-    <h1 class="hero-title">Découvrez l'Exceptionnel</h1>
-    <p class="hero-subtitle">Une sélection de produits utiles, choisis pour leur qualité, leur durabilité et leur design.</p>
-    <a href="#catalogue" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+
+<!-- ── Hero ────────────────────────────────────────────────── -->
+<section class="hero-section" style="padding: 5rem 0 3rem;">
+    <h1 class="hero-title">Découvrez<br>l'Exceptionnel</h1>
+    <p class="hero-subtitle">Une sélection de produits choisis pour leur qualité, leur durabilité et leur design.</p>
+    <a href="#catalogue" class="btn btn-primary" style="padding: 0.9rem 2.2rem; font-size: 1.05rem;">
         Découvrir la collection
     </a>
 </section>
 
-<!-- Section Pourquoi PrimeShop -->
-<section style="margin: 6rem auto; text-align: center; max-width: 800px;" class="glass-panel" style="padding: 4rem;">
-    <div style="padding: 4rem 2rem;">
-        <h2 style="font-size: 2rem; margin-bottom: 2rem;">Une sélection, pas un catalogue</h2>
-        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
-            Chaque produit est choisi avec soin pour répondre à un seul objectif : vous proposer le meilleur, sans compromis inutile.
-        </p>
-        <p style="color: var(--text-primary); font-size: 1.2rem; font-weight: 500;">
-            Qualité, fiabilité et simplicité sont au cœur de notre approche.
-        </p>
-    </div>
+<!-- ── Pourquoi PrimeShop ───────────────────────────────────── -->
+<section class="glass-panel" style="margin: 4rem 0; padding: 3.5rem 3rem; text-align: center;">
+    <h2 style="font-size: 1.9rem; margin-bottom: 1rem;">Une sélection, pas un catalogue</h2>
+    <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.9; max-width: 640px; margin: 0 auto 1.5rem;">
+        Chaque produit est choisi avec soin pour répondre à un seul objectif : vous proposer le meilleur, sans compromis.
+    </p>
+    <p style="color: var(--text-primary); font-size: 1.1rem; font-weight: 500;">
+        Qualité, fiabilité et simplicité — au cœur de notre approche.
+    </p>
 </section>
 
-<!-- Section Engagement -->
-<section style="margin: 6rem auto; max-width: 1000px; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-    <div>
-        <h2 style="font-size: 2rem; margin-bottom: 2rem;">Exigence et transparence</h2>
-        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
-            Nous sélectionnons uniquement des produits qui répondent à des critères stricts :
-        </p>
-        <ul style="list-style: none; padding: 0;">
-            <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Qualité durable
-            </li>
-            <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Utilité réelle
-            </li>
-            <li style="margin-bottom: 2rem; display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Design soigné
-            </li>
-        </ul>
-        <p style="font-size: 1.2rem; font-weight: 600;">Rien de plus. Rien de moins.</p>
-    </div>
-    <div class="glass-panel" style="height: 400px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); overflow: hidden; padding: 0;">
-         <img src="{% static 'images/premium_product.png' %}" alt="Sélection PrimeShop" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
-    </div>
-</section>
 
-<!-- Section Catégories & Catalogue -->
-<section id="catalogue" style="margin-top: 6rem;">
-    <div style="text-align: center; margin-bottom: 4rem;">
-        <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Explorez nos catégories</h2>
-        <p style="color: var(--text-secondary); font-size: 1.1rem;">
-            Des essentiels du quotidien aux produits innovants,<br>découvrez une sélection pensée pour simplifier votre vie.
+
+<!-- ── Catalogue ─────────────────────────────────────────────── -->
+<section id="catalogue" style="margin-top: 5rem;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2rem; margin-bottom: 0.75rem;">Explorez nos catégories</h2>
+        <p style="color: var(--text-secondary); font-size: 1rem;">
+            Des essentiels du quotidien aux produits innovants.
         </p>
     </div>
 
-    <!-- Filtre Catégories (Affiché horizontalement si on veut) -->
-    <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
-        <a href="?category=" class="btn {% if not selected_category %}btn-primary{% else %}btn-outline{% endif %}">Filtre : Toutes</a>
+    <!-- Filtres catégories -->
+    <div style="display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap;">
+        <a href="?category=#catalogue" class="btn {% if not selected_category %}btn-primary{% else %}btn-outline{% endif %}" style="font-size: 0.85rem;">Tout voir</a>
         {% for cat in categories_menu %}
-            <a href="?category={{ cat.slug }}" class="btn {% if selected_category == cat.slug %}btn-primary{% else %}btn-outline{% endif %}">{{ cat.name }}</a>
+            <a href="?category={{ cat.slug }}#catalogue" class="btn {% if selected_category == cat.slug %}btn-primary{% else %}btn-outline{% endif %}" style="font-size: 0.85rem;">{{ cat.name }}</a>
         {% endfor %}
     </div>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem;">
+
+    <!-- Grille produits -->
+    <div class="product-grid">
         {% if products %}
             {% for product in products %}
-            <!-- Carte Produit -->
-            <article class="glass-panel" style="padding: 1.5rem; transition: transform 0.3s ease;">
-                <div style="height: 220px; background: rgba(255,255,255,0.03); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center;">
-                    <span style="color: var(--text-secondary); font-size: 0.85rem;">Sélectionné avec soin</span>
+            <article class="product-card">
+                <div class="product-card-image">
+                    {% with main_img=product.images.first %}
+                    {% if main_img %}
+                        <img src="{{ main_img.image.url }}" alt="{{ main_img.alt_text|default:product.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+                    {% else %}
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+                            <span>Pas d'image</span>
+                        </div>
+                    {% endif %}
+                    {% endwith %}
                 </div>
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <div>
-                        <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-color); font-weight: 600;">
-                            {% if product.category %}{{ product.category.name }}{% else %}Sélection{% endif %}
-                        </span>
-                        <h3 style="font-size: 1.25rem; font-weight: 500; margin-top: 0.3rem;">{{ product.name }}</h3>
+
+                <div class="product-card-body">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                        <div style="flex: 1;">
+                            <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-color); font-weight: 600;">
+                                {% if product.category %}{{ product.category.name }}{% else %}Sélection{% endif %}
+                            </span>
+                            <h3 style="font-size: 1.05rem; font-weight: 600; margin-top: 0.2rem; line-height: 1.3;">{{ product.name }}</h3>
+                        </div>
+                        <span style="font-size: 1.1rem; font-weight: 700; color: var(--accent-color); margin-left: 0.75rem; white-space: nowrap;">{{ product.price }} F CFA</span>
                     </div>
-                    <span style="font-size: 1.2rem; font-weight: 600; color: #fff;">{{ product.price }}€</span>
-                </div>
-                
-                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1.5rem;">
-                    <a href="{% url 'products:detail' product.id %}" class="btn btn-outline" style="flex: 1; text-align: center;">Détails</a>
-                    <form method="POST" action="{% url 'cart:add' %}" style="margin: 0;">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <input type="hidden" name="quantity" value="1">
-                        <button type="submit" class="btn btn-primary" style="padding: 0.6rem;">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        </button>
-                    </form>
+
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem;">
+                        <form method="POST" action="{% url 'cart:add' %}" style="margin: 0; flex: 1; display: flex; gap: 0.4rem; align-items: center;">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="number" name="quantity" value="1" min="1" max="10"
+                                   style="width: 52px; padding: 0.5rem 0.4rem; border-radius: 8px; border: 1px solid var(--glass-border); background: #fff; color: #111; font-size: 0.9rem; font-weight: 600; text-align: center;">
+                            <button type="submit" class="btn btn-primary" style="flex: 1; padding: 0.6rem; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 5px;" title="Ajouter au panier">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                Ajouter
+                            </button>
+                        </form>
+                        <a href="{% url 'products:detail' product.id %}" class="btn btn-outline" style="padding: 0.6rem 0.8rem; font-size: 0.9rem;">Détails</a>
+                    </div>
                 </div>
             </article>
             {% endfor %}
         {% else %}
-            <!-- État vide -->
-            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; background: var(--glass-bg); border-radius: 12px; border: 1px solid var(--glass-border);">
-                <p style="color: var(--text-secondary);">Cette sélection est en cours de réapprovisionnement.</p>
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: var(--glass-bg); border-radius: 16px; border: 1px solid var(--glass-border);">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="color: var(--text-secondary); margin-bottom: 1.5rem;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                {% if request.GET.q %}
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Aucun produit trouvé pour &laquo;&nbsp;{{ request.GET.q }}&nbsp;&raquo;</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Vérifiez l'orthographe ou essayez un autre mot-clé.</p>
+                {% else %}
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Aucun produit dans cette catégorie.</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Revenez bientôt, notre sélection s'enrichit régulièrement.</p>
+                {% endif %}
+                <a href="{% url 'products:home' %}" class="btn btn-outline" style="display: inline-block; margin-top: 1.5rem; padding: 0.6rem 1.5rem; border-radius: 8px;">Voir tous les produits</a>
             </div>
         {% endif %}
     </div>
 </section>
 
-<!-- Section Confiance -->
-<section style="margin: 8rem 0; text-align: center; padding: 4rem 2rem; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
-    <h2 style="font-size: 2rem; margin-bottom: 3rem;">Une expérience simple et sécurisée</h2>
+<!-- ── Confiance ───────────────────────────────────────────── -->
+<section style="margin: 7rem 0; text-align: center; padding: 3.5rem 2rem; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
+    <h2 style="font-size: 1.9rem; margin-bottom: 3rem;">Une expérience simple et sécurisée</h2>
     <div style="display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap;">
         <div>
-            <div style="margin-bottom: 1rem;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
-            <h4 style="font-size: 1.1rem; font-weight: 500;">Paiement sécurisé</h4>
+            <div style="margin-bottom: 0.75rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem;">Paiement sécurisé</h4>
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">Transactions protégées</p>
         </div>
         <div>
-            <div style="margin-bottom: 1rem;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>
-            <h4 style="font-size: 1.1rem; font-weight: 500;">Expédition suivie</h4>
+            <div style="margin-bottom: 0.75rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            </div>
+            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem;">Expédition suivie</h4>
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">Livraison rapide</p>
         </div>
         <div>
-            <div style="margin-bottom: 1rem;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"></path></svg></div>
-            <h4 style="font-size: 1.1rem; font-weight: 500;">Support réactif</h4>
+            <div style="margin-bottom: 0.75rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"></path></svg>
+            </div>
+            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem;">Support réactif</h4>
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">Réponse en 24h</p>
+        </div>
+        <div>
+            <div style="margin-bottom: 0.75rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            </div>
+            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem;">Retours faciles</h4>
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">30 jours offerts</p>
         </div>
     </div>
-    <p style="margin-top: 3rem; color: var(--text-secondary); font-size: 1.1rem;">Acheter chez PrimeShop, c'est faire le choix de la sérénité.</p>
 </section>
 
-<!-- CTA final -->
-<section style="text-align: center; margin-bottom: 4rem;">
-    <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Prêt à découvrir notre sélection ?</h2>
-    <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2.5rem;">Des produits choisis pour leur qualité, rien de superflu.</p>
-    <a href="#catalogue" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">
-        Explorer la collection
-    </a>
+<!-- ── Avis Clients ────────────────────────────────────────── -->
+<section id="avis" style="margin: 5rem 0;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 1.9rem; margin-bottom: 0.75rem;">Ce que disent nos clients</h2>
+        <p style="color: var(--text-secondary); font-size: 1rem;">Des milliers de clients satisfaits chaque mois.</p>
+    </div>
+
+    <div class="reviews-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+        <!-- Avis 1 -->
+        <div class="glass-panel" style="padding: 1.75rem;">
+            <div style="display: flex; gap: 3px; margin-bottom: 1rem;">
+                {% for i in "12345" %}<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>{% endfor %}
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1.25rem;">
+                "Qualité irréprochable, livraison rapide. Je recommande PrimeShop sans hésitation — mes achats sont arrivés en parfait état."
+            </p>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-weight:bold;color:var(--text-secondary);">A</div>
+                <div>
+                    <p style="font-weight: 600; font-size: 0.9rem;">Amara D.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.78rem;">Cliente vérifiée</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Avis 2 -->
+        <div class="glass-panel" style="padding: 1.75rem;">
+            <div style="display: flex; gap: 3px; margin-bottom: 1rem;">
+                {% for i in "12345" %}<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>{% endfor %}
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1.25rem;">
+                "L'interface est claire et le processus d'achat très fluide. Les produits correspondent exactement à la description."
+            </p>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-weight:bold;color:var(--text-secondary);">K</div>
+                <div>
+                    <p style="font-weight: 600; font-size: 0.9rem;">Kofi M.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.78rem;">Client vérifié</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Avis 3 -->
+        <div class="glass-panel" style="padding: 1.75rem;">
+            <div style="display: flex; gap: 3px; margin-bottom: 1rem;">
+                {% for i in "1234" %}<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>{% endfor %}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1.25rem;">
+                "Très bon rapport qualité-prix. Le support a répondu rapidement à ma question. Je reviendrai sûrement."
+            </p>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-weight:bold;color:var(--text-secondary);">L</div>
+                <div>
+                    <p style="font-weight: 600; font-size: 0.9rem;">Léa F.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.78rem;">Cliente vérifiée</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
+<!-- ── FAQ ────────────────────────────────────────────────── -->
+<section id="faq" style="margin: 5rem 0;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 1.9rem; margin-bottom: 0.75rem;">Questions fréquentes</h2>
+        <p style="color: var(--text-secondary); font-size: 1rem;">Tout ce que vous devez savoir avant de commander.</p>
+    </div>
+
+    <div class="glass-panel" style="padding: 0 2rem; max-width: 760px; margin: 0 auto;">
+        {% for q, a in faq_items %}
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                {{ q }}
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">{{ a }}</div>
+        </div>
+        {% empty %}
+        <!-- FAQ statique si pas de données dynamiques -->
+        {% for item in faq_static %}
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                {{ item.0 }}
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">{{ item.1 }}</div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</section>
+
+
+{% endblock %}
+
+<!-- FAQ JS -->
+{% block extra_js %}
+<script>
+function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Fermer tous
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    // Ouvrir si pas déjà ouvert
+    if (!isOpen) item.classList.add('open');
+}
+</script>
 {% endblock %}

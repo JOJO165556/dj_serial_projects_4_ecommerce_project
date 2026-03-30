@@ -1,11 +1,26 @@
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.log
+
+# Serveurs locaux
 *.sqlite3
 db.sqlite3
+
+# Environnement virtuel
+venv/
+
+# Django
 /media
 /staticfiles
 .env
-.venv/
+
+# Tests
 .pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db

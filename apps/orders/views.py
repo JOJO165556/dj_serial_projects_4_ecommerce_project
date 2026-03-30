@@ -3,11 +3,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from apps.cart.models import Cart
 from services.order_service import create_order
-from services.payment.flutterwave import create_flutterwave_payment
+from services.payment.flutterwave import create_flutterwave_payment, verify_flutterwave_payment
+from services.payment.payment_service import process_payment
 from .forms import OrderCheckoutForm
+from apps.orders.models import Order
 from core.exceptions.base import BaseAPIException
 from django.conf import settings
-from django.conf import settings
+
+@login_required(login_url='/users/login/')
+def order_history_web(request):
+    """Affiche l'historique des commandes de l'utilisateur."""
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'orders/history.html', {'orders': orders})
 
 @login_required(login_url='/users/login/')
 def checkout_web(request):
@@ -29,13 +36,17 @@ def checkout_web(request):
             shipping_address = form.cleaned_data.get('shipping_address')
             try:
                 order = create_order(request.user, shipping_address=shipping_address)
+                # Sauvegarde du montant total sur la commande
+                order.total_price = total
+                order.save(update_fields=['total_price'])
                 # Appel API Flutterwave
-                flw_resp = create_flutterwave_payment(order, request.user)
+                flw_resp = create_flutterwave_payment(order, request.user, request=request)
                 if flw_resp.get('status') == 'success' and 'data' in flw_resp and 'link' in flw_resp['data']:
                     messages.info(request, "Redirection vers le portail de paiement sécurisé...")
                     return redirect(flw_resp['data']['link'])
                 else:
-                    messages.error(request, "Erreur avec l'API Flutterwave. Veuillez réessayer.")
+                    err = flw_resp.get('message', 'Erreur API Flutterwave.')
+                    messages.error(request, f"Paiement impossible: {err}")
             except BaseAPIException as e:
                 messages.error(request, str(e.default_detail))
                 
@@ -63,6 +74,20 @@ def order_success_web(request):
         parts = tx_ref.split('_')
         if len(parts) >= 2:
             order_id = parts[1]
+            try:
+                order = Order.objects.get(id=order_id)
+                
+                # FALLBACK LOCALHOST: 
+                # Le webhook FLW ne peut pas atteindre une url localhost.
+                # Donc on vérifie directement la transaction si on est redirigé avec "successful"
+                if status == 'successful' and transaction_id and order.status == 'pending':
+                    verify_resp = verify_flutterwave_payment(transaction_id)
+                    if verify_resp.get('status') == 'success' and verify_resp.get('data', {}).get('status') == 'successful':
+                        # Traiter le paiement
+                        process_payment(order.id, request.user)
+                        
+            except Order.DoesNotExist:
+                pass
             
     context = {
         'order_id': order_id,

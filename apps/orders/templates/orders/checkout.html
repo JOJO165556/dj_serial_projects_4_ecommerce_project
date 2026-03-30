@@ -9,19 +9,20 @@
 
     <div style="display: flex; flex-direction: column; gap: 2.5rem;">
         
-        <!-- Résumé rapide de la sélection -->
+        <!-- Résumé rapide du panier -->
         <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.5rem;">
             <h3 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Résumé</h3>
             
             {% for item in items %}
             <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem;">
                 <span>{{ item.quantity }}x {{ item.product.name }}</span>
-                <span>{% widthratio item.product.price 1 item.quantity %}€</span>
+                <span>{% widthratio item.product.price 1 item.quantity %} F CFA</span>
             </div>
             {% endfor %}
-            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 1rem; padding-top: 1rem; display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem;">
-                <span>Total</span>
-                <span>{{ total }}€</span>
+            <hr style="border:0;border-top:1px dashed var(--glass-border);margin:1.5rem 0;">
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.25rem;">
+                <span>Total à payer</span>
+                <span>{{ total }} F CFA</span>
             </div>
         </div>
 
@@ -29,7 +30,7 @@
         <div>
             <h3 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Adresse de Livraison</h3>
             
-            <form method="POST" action="{% url 'orders:checkout' %}">
+            <form method="POST" action="{% url 'orders:checkout' %}" hx-boost="false">
                 {% csrf_token %}
                 
                 <div style="margin-bottom: 2rem;">
@@ -42,10 +43,10 @@
                     {% endif %}
                 </div>
                 
-                <div style="display: flex; gap: 1rem;">
-                    <a href="{% url 'cart:detail' %}" class="btn btn-outline" style="flex: 1; padding: 1rem; text-align: center;">Retour à la sélection</a>
-                    <button type="submit" class="btn btn-primary" style="flex: 2; padding: 1rem; font-size: 1.1rem; border-radius: 8px;">
-                        Finaliser la commande ({{ total }}€)
+                <div style="display: flex; gap: 1rem;" class="checkout-actions">
+                    <a href="{% url 'cart:detail' %}" class="btn btn-outline" style="flex: 1; padding: 1rem; text-align: center;">Retour au panier</a>
+                    <button type="submit" class="btn btn-primary" style="flex: 2; padding: 1rem; font-size: 1rem; border-radius: 8px;">
+                        Payer {{ total }} F CFA &rarr;
                     </button>
                 </div>
             </form>
@@ -55,22 +56,36 @@
 </div>
 
 <style>
-/* Style spécifique au textarea pour intégrer le design existant */
 .custom-textarea-wrapper textarea {
     width: 100%;
-    background: rgba(0,0,0,0.2) !important;
-    border: 1px solid var(--glass-border) !important;
+    background: #ffffff !important;
+    border: 1px solid #d1d5db !important;
     border-radius: 8px !important;
-    color: white !important;
+    color: #111827 !important;
     padding: 1rem !important;
     font-size: 1rem !important;
     outline: none !important;
     transition: border-color 0.3s !important;
     font-family: 'Inter', sans-serif !important;
     resize: vertical;
+    min-height: 120px;
+}
+.custom-textarea-wrapper textarea::placeholder {
+    color: #9ca3af !important;
 }
 .custom-textarea-wrapper textarea:focus {
     border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.15) !important;
+}
+@media (max-width: 768px) {
+    .checkout-actions {
+        flex-direction: column !important;
+    }
+    .checkout-actions a,
+    .checkout-actions button {
+        flex: unset !important;
+        width: 100% !important;
+    }
 }
 </style>
 {% endblock %}

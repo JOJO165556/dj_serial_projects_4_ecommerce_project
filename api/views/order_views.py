@@ -12,7 +12,7 @@ from api.serializers.order_serializers import OrderSerializer
 
 # Créer commande
 class CreateOrderView(APIView):
-    permission_classes = [IsAuthenticated, IsCustomer]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         address = request.data.get('shipping_address')
@@ -30,7 +30,7 @@ class CreateOrderView(APIView):
 
 # Voir ses commandes
 class UserOrderView(APIView):
-    permission_classes = [IsAuthenticated, IsCustomer]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         orders = (
@@ -45,7 +45,7 @@ class UserOrderView(APIView):
 
 # Détail d'une commande
 class OrderDetailView(APIView):
-    permission_classes = [IsAuthenticated, IsCustomer]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         try:

@@ -39,6 +39,31 @@ class User(AbstractUser):
         default=Roles.CUSTOMER
     )
 
+    def save(self, *args, **kwargs):
+        # Sécurité : définir is_staff et is_superuser automatiquement selon le rôle
+        if self.role == self.Roles.ADMIN:
+            self.is_staff = True
+            self.is_superuser = True
+        elif self.role in [self.Roles.MANAGER, self.Roles.SELLER]:
+            self.is_staff = True
+            self.is_superuser = False
+        else:  # CUSTOMER
+            self.is_staff = False
+            self.is_superuser = False
+
+        super().save(*args, **kwargs)
+
+        # Assigner au groupe correspondant après la sauvegarde (id existant requis)
+        from django.contrib.auth.models import Group
+        if self.role == self.Roles.MANAGER:
+            group, _ = Group.objects.get_or_create(name='Managers')
+            self.groups.set([group])
+        elif self.role == self.Roles.SELLER:
+            group, _ = Group.objects.get_or_create(name='Sellers')
+            self.groups.set([group])
+        elif self.role == self.Roles.CUSTOMER:
+            self.groups.clear()
+
 class Profile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,

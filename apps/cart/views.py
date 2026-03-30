@@ -11,7 +11,10 @@ def cart_detail_web(request):
     cart, _ = Cart.objects.get_or_create(user=request.user)
     items = cart.items.select_related('product').all()
     
-    total = sum(item.product.price * item.quantity for item in items)
+    # Calcul du total et annotation line_total sur chaque item
+    for item in items:
+        item.line_total = item.product.price * item.quantity
+    total = sum(item.line_total for item in items)
     
     context = {
         'items': items,

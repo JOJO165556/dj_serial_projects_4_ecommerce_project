@@ -4,12 +4,27 @@ from .models import User
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    fieldsets = BaseUserAdmin.fieldsets + (
-        ("Role", {"fields": ("role",)}),
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        ("Informations Personnelles", {"fields": ("first_name", "last_name")}),
+        ("Permissions", {
+            "fields": (
+                "is_active",
+                "is_staff",
+                "is_superuser",
+                "groups",
+                "user_permissions",
+            ),
+        }),
+        ("Dates Importantes", {"fields": ("last_login", "date_joined")}),
+        ("Rôle", {"fields": ("role",)}),
     )
     
-    add_fieldsets = BaseUserAdmin.add_fieldsets + (
-        ("Role", {"fields": ("role",)}),
+    add_fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": ("email", "password", "role"),
+        }),
     )
     
     list_display = ["email", "role", "is_active", "is_staff"]

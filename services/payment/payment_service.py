@@ -31,5 +31,10 @@ def process_payment(order_id, user):
         order=order,
         amount=order.total_price
     )
+    payment.status = 'completed'
+    payment.save(update_fields=['status'])
+
+    order.status = 'paid'
+    order.save(update_fields=['status'])
 
     return payment

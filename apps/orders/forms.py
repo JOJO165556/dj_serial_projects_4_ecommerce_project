@@ -12,6 +12,6 @@ class OrderCheckoutForm(forms.ModelForm):
         widgets = {
             'shipping_address': forms.Textarea(attrs={
                 'rows': 4,
-                'placeholder': 'De quelle façon souhaitez-vous être livré ? (Ex: 12 Rue de la Paix, 75000 Paris, France)'
+                'placeholder': 'De quelle façon souhaitez-vous être livré ? (Ex: Tokoin Wuiti, Rue 123, Lomé, Togo)'
             })
         }
